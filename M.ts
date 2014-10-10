@@ -14,13 +14,18 @@ module M {
         radius: number;
     }
 
-    export function normalizeDeg(deg) {
+    export function normalizeDeg360(deg) {
         var norm = deg % 360;
         return deg < 0 ? deg + 360 : deg;
     }
+    
+    export function normalizeDeg180(deg) {
+        var n360 = normalizeDeg360(deg);
+        return n360 > 180 ? n360 - 360 : n360;
+    }
 
     export function radToDeg(rad) {
-        return normalizeDeg(rad * (180 / Math.PI));
+        return rad * (180 / Math.PI);
     }
 
     export function degToRad(deg) {
@@ -30,7 +35,7 @@ module M {
     export function xytoangle(x, y, boundingBoxSize) {
         var rad = Math.atan2(y - boundingBoxSize / 2, x - boundingBoxSize / 2);
         var deg = radToDeg(rad);
-        return normalizeDeg(deg);
+        return normalizeDeg360(deg);
     }
 
     export function xytoradius(x, y, boundingBoxSize) {
@@ -40,11 +45,11 @@ module M {
     }
 
     export function xytoradial(x, y, boundingBoxSize): IRadialCoords {
-                    return {
+        return {
             angle: xytoangle(x, y, boundingBoxSize),
             radius: xytoradius(x, y, boundingBoxSize)
-        }
-                }
+        };
+    }
 }
 
 export = M;
