@@ -39,10 +39,10 @@ module U {
         }
 
         forEach(cb: (data) => void) {
-            var cur = this.first;
-            do {
+            var cur;
+            while (cur = (cur ? cur.next : this.first)) {
                 cb(cur.value);
-            } while ((cur = cur.next) != null);
+            }
         }
     }
 
