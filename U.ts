@@ -4,19 +4,19 @@ import _ = require('underscore');
 module U {
 
 
-    export interface ILinkedListItem {
-        value: any;
-        next: ILinkedListItem;
-        prev: ILinkedListItem;
+    export interface ILinkedListItem<T> {
+        value: T;
+        next: ILinkedListItem<T>;
+        prev: ILinkedListItem<T>;
     }
 
-    export class LinkedList {
-        first: ILinkedListItem;
-        last: ILinkedListItem;
+    export class LinkedList<T> {
+        first: ILinkedListItem<T>;
+        last: ILinkedListItem<T>;
         size = 0;
 
-        push(data) {
-            var item: ILinkedListItem = {
+        push(data: T) {
+            var item: ILinkedListItem<T> = {
                 value: data,
                 next: null,
                 prev: this.last
@@ -38,7 +38,7 @@ module U {
             }
         }
 
-        forEach(cb: (data) => void) {
+        forEach(cb: (value: T) => void) {
             var cur;
             while (cur = (cur ? cur.next : this.first)) {
                 cb(cur.value);
