@@ -54,6 +54,18 @@ module M {
             radius: xytoradius(x, y, boundingBoxSize)
         };
     }
+
+    export function ifOverlap(aStart: number, aEnd: number, bStart: number, bEnd: number) {
+        if (aStart > aEnd) {
+            throw aStart + " start is more than end " + aEnd;
+        }
+        if (bStart > bEnd) {
+            throw bStart + " start is more than end " + bEnd;
+        }
+
+        return bStart < aEnd && bEnd > aStart;
+
+    }
 }
 
 export = M;
