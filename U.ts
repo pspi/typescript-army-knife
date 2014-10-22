@@ -35,12 +35,24 @@ module U {
             this.size++;
         }
 
-        removeFirst() {
+        clear() {
+            while (this.size > 0) {
+                this.removeFirst();
+            }
+        }
+
+        pushList(u: LinkedList<T>) {
+            u.forEach(i => this.push(i));
+        }
+
+        removeFirst(): T {
+            var value = this.first.value;
             this.first = this.first.next;
             this.size--;
             if (this.size == 0) {
                 this.last = null;
             }
+            return value;
         }
 
         forEach(cb: (value: T) => void) {
@@ -48,6 +60,16 @@ module U {
             while (cur = (cur ? cur.next : this.first)) {
                 cb(cur.value);
             }
+        }
+
+        isEmpty(): boolean {
+            return this.size == 0;
+        }
+
+        toArray(): T[] {
+            var t = [];
+            this.forEach((i) => t.push(i));
+            return t;
         }
     }
 
