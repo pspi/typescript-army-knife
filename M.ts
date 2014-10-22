@@ -32,6 +32,10 @@ module M {
         return deg * (Math.PI / 180);
     }
 
+    export function msToKmh(ms) {
+        return ms * 3.6;
+    }
+
     export function xytoangle(x, y, boundingBoxSize) {
         var rad = Math.atan2(y - boundingBoxSize / 2, x - boundingBoxSize / 2);
         var deg = radToDeg(rad);
