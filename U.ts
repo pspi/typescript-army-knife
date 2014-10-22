@@ -3,6 +3,11 @@ import _ = require('underscore');
 // Util
 module U {
 
+    export function duplicateAwarePush<T>(array: Array<T>, item: T) {
+        if (array.indexOf(item) == -1) {
+            array.push(item);
+        }
+    }
 
     export interface ILinkedListItem<T> {
         value: T;
