@@ -1,7 +1,13 @@
+/// <reference path='../DefinitelyTyped/underscore/underscore.d.ts'/>
+
 import _ = require('underscore');
 
 // Util
 module U {
+
+    export function containsOnly<T>(a: T[], b: T[]) {
+        return _.difference(a, b).length == 0;
+    }
 
     export function isInNode(): boolean {
         return typeof window === 'undefined';
