@@ -214,6 +214,55 @@ module U {
             return --count.count;
         }
     }
+
+    interface MapItem<K, V> {
+        key: K;
+        value: V;
+    }
+
+    export class Map<K, V> {
+        private map: MapItem<K, V>[] = [];
+
+        put(key: K, value: V) {
+            if (this.containsKey(key)) {
+                throw 'already contains key';
+            }
+            this.map.push({
+                key: key,
+                value: value
+            });
+        }
+
+        get(key: K) {
+            var index = this.indexOf(key);
+            if (index == null) {
+                throw "no such key";
+            }
+            return this.map[index].value;
+        }
+
+        private indexOf(key: K) {
+            for (var i = 0; i < this.map.length; i++) {
+                if (this.map[i].key === key) {
+                    return i;
+                }
+            }
+            return null;
+        }
+
+        containsKey(key: K) {
+            return this.indexOf(key) != null;
+        }
+
+        removeKey(key) {
+            var before = this.map.length;
+            this.map = _.reject(this.map, (i) => i.key == key);
+            var after = this.map.length;
+            if (after != before - 1) {
+                throw "key not found";
+            };
+        }
+    }
 }
 
 export = U;
