@@ -3,6 +3,14 @@ import _ = require('underscore');
 // Util
 module U {
 
+    export function isInNode(): boolean {
+        return typeof window === 'undefined';
+    }
+
+    export function isInBrowser(): boolean {
+        return !isInNode();
+    }
+
     export function duplicateAwarePush<T>(array: Array<T>, item: T) {
         if (array.indexOf(item) == -1) {
             array.push(item);
