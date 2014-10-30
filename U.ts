@@ -173,18 +173,45 @@ module U {
 
     export class NameCounter {
 
-        private values: { [v: string]: number } = {};
+        private counts: { [v: string]: number } = {};
 
         getPositiveNames(): string[] {
-            return _.filter(_.keys(this.values), key => this.values[key] > 0);
+            return _.filter(_.keys(this.counts), key => this.counts[key] > 0);
         }
 
         increment(name) {
-            this.values[name] = U.nvl(this.values[name], 0) + 1;
+            this.counts[name] = U.nvl(this.counts[name], 0) + 1;
         }
 
         decrement(name) {
-            this.values[name]--;
+            this.counts[name]--;
+        }
+    }
+
+    interface ObjectCount<T> {
+        object: T;
+        count: number;
+    }
+
+    export class ObjectCounter<T> {
+
+        private counts: ObjectCount<T>[] = [];
+
+        increment(object): number {
+            var count = _.find(this.counts, count => count.object == object);
+            if (count == null) {
+                count = {
+                    object: object,
+                    count: 0
+                }
+                this.counts.push(count);
+            }
+            return ++count.count;
+        }
+
+        decrement(object): number {
+            var count = _.find(this.counts, count => count.object == object);
+            return --count.count;
         }
     }
 }
