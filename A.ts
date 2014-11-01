@@ -25,6 +25,21 @@ module A {
         return !_.isUndefined(obj) && !_.isNull(obj) && !_.isNaN(obj)
     }
 
+    export function areDefined(...objs) {
+        for (var i = 0; i < objs.length; i++) {
+            if (!isDefined(objs[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    export function assertDefined(...objs) {
+        if (!areDefined.apply(objs)) {
+            throw "not defined";
+        }
+    }
+
     export function assertTag($e: JQuery, tag: string) {
         var actual = $e.prop('tagName');
         if (actual.toLowerCase() != tag) {
