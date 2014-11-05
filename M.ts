@@ -23,7 +23,7 @@ module M {
         var norm = deg % 360;
         return deg < 0 ? deg + 360 : deg;
     }
-    
+
     export function normalizeDeg180(deg) {
         var n360 = normalizeDeg360(deg);
         return n360 > 180 ? n360 - 360 : n360;
@@ -62,14 +62,13 @@ module M {
 
     export function ifOverlap(aStart: number, aEnd: number, bStart: number, bEnd: number) {
         if (aStart > aEnd) {
-            throw aStart + " start is more than end " + aEnd;
+            throw new Error(aStart + " start is more than end " + aEnd);
         }
         if (bStart > bEnd) {
-            throw bStart + " start is more than end " + bEnd;
+            throw new Error(bStart + " start is more than end " + bEnd);
         }
 
         return bStart < aEnd && bEnd > aStart;
-
     }
 }
 

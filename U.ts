@@ -59,7 +59,7 @@ module U {
 
         unshift(t: T) {
             if (this.length == 0) {
-                throw "oh please god dont do this to empty list, aka not implemented";
+                throw new Error("oh please god dont do this to empty list, aka not implemented");
             }
             var newFirst: ILinkedListItem<T> = {
                 value: t,
@@ -225,7 +225,7 @@ module U {
 
         put(key: K, value: V) {
             if (this.containsKey(key)) {
-                throw 'already contains key';
+                throw new Error('already contains key');
             }
             this.map.push({
                 key: key,
@@ -236,7 +236,7 @@ module U {
         get(key: K) {
             var index = this.indexOf(key);
             if (index == null) {
-                throw "no such key";
+                throw new Error("no such key");
             }
             return this.map[index].value;
         }
@@ -259,7 +259,7 @@ module U {
             this.map = _.reject(this.map, (i) => i.key == key);
             var after = this.map.length;
             if (after != before - 1) {
-                throw "key not found";
+                throw new Error("key not found");
             };
         }
     }

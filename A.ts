@@ -25,7 +25,7 @@ module A {
 
     export function assertNumbers(...numbers) {
         if (!areNumbers.apply(null, numbers)) {
-            throw "not a number";
+            throw new Error("not a number");
         }
     }
     export function areNumbers(...numbers) {
@@ -53,7 +53,7 @@ module A {
 
     export function assertDefined(...objs) {
         if (!areDefined.apply(null, objs)) {
-            throw "not defined";
+            throw new Error("not defined");
         }
     }
 
