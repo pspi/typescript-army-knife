@@ -6,6 +6,23 @@ import _ = require('underscore');
 // Assert
 module A {
 
+    export function assert(statement: boolean, errorMessage: string) {
+        if (!statement) {
+            throw new Error(errorMessage);
+        }
+    }
+
+    export function assertBetween(value: number, start: number, end: number) {
+        assert(start <= end, "invalid parameters");
+        assert(value <= end, "value '" + value + "' higher than allowed " + end);
+        assert(value >= start, "value '" + value + "' higher than allowed " + end);
+    }
+
+    export function isBetween(value: number, start: number, end: number) {
+        assert(start <= end, "invalid parameters");
+        return start <= value && value <= end;
+    }
+
     export function assertNumbers(...numbers) {
         if (!areNumbers.apply(null, numbers)) {
             throw "not a number";
@@ -35,7 +52,7 @@ module A {
     }
 
     export function assertDefined(...objs) {
-        if (!areDefined.apply(objs)) {
+        if (!areDefined.apply(null, objs)) {
             throw "not defined";
         }
     }
