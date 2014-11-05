@@ -5,6 +5,53 @@ import _ = require('underscore');
 // Util
 module U {
 
+    export class Iterator<T> {
+
+        private index = -1;
+
+        constructor(private array: T[]) { }
+
+        hasNext(): boolean {
+            return (this.index + 1) < this.array.length;
+        }
+
+        next(): T {
+            if (!this.hasNext()) {
+                throw new Error("not items left");
+            }
+            this.index++;
+            return this.get();
+        }
+
+        get(): T {
+            return this.array[this.index];
+        }
+    }
+
+    export class CachedValue<T> {
+        private value: T;
+
+        constructor(private calculateValue: () => T) { }
+
+        get(): T {
+            if (!this.value) {
+                this.value = this.calculateValue();
+            }
+            return this.value;
+        }
+    }
+
+    export class Unique {
+
+        private i = 0;
+
+        constructor(private prefix: string) { }
+
+        get() {
+            return this.prefix + (++this.i);
+        }
+    }
+
     export function containsOnly<T>(a: T[], b: T[]) {
         return _.difference(a, b).length == 0;
     }
