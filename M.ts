@@ -1,6 +1,11 @@
 // Math
 module M {
 
+    export function round(num, frac) {
+        var m = Math.pow(10, frac);
+        return Math.round(num * m) / m;
+    }
+
     export function radialToX(radial: IRadialCoords, boundingBoxSize): number {
         return (boundingBoxSize / 2) * (1 + radial.radius * Math.cos(degToRad(radial.angle)));
     }
