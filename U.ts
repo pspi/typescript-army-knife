@@ -17,7 +17,7 @@ module U {
 
         next(): T {
             if (!this.hasNext()) {
-                throw new Error("not items left");
+                throw new Error("no items left");
             }
             this.index++;
             return this.get();
@@ -272,7 +272,7 @@ module U {
 
         put(key: K, value: V) {
             if (this.containsKey(key)) {
-                throw new Error('already contains key');
+                throw new Error("already contains key: " + key);
             }
             this.map.push({
                 key: key,
@@ -283,7 +283,7 @@ module U {
         get(key: K) {
             var index = this.indexOf(key);
             if (index == null) {
-                throw new Error("no such key");
+                throw new Error("no such key: " + key);
             }
             return this.map[index].value;
         }
@@ -306,7 +306,7 @@ module U {
             this.map = _.reject(this.map, (i) => i.key == key);
             var after = this.map.length;
             if (after != before - 1) {
-                throw new Error("key not found");
+                throw new Error("key not found: " + key);
             };
         }
     }
