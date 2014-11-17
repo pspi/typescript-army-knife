@@ -62,12 +62,11 @@ module M {
 
     export function ifOverlap(aStart: number, aEnd: number, bStart: number, bEnd: number) {
         if (aStart > aEnd) {
-            throw new Error(aStart + " start is more than end " + aEnd);
+            return false;
         }
         if (bStart > bEnd) {
-            throw new Error(bStart + " start is more than end " + bEnd);
+            return false;
         }
-
         return bStart < aEnd && bEnd > aStart;
     }
 }
