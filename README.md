@@ -12,3 +12,9 @@ Math2 | extends on standard Math
 String | string manipulation and formatting
 Util | whats left and too small for own module
 Value | generating unique and counting values
+
+Todo
+----
+
+* unit tests using jasmine
+* test automation
