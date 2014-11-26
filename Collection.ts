@@ -1,9 +1,4 @@
-/// <reference path='../DefinitelyTyped/underscore/underscore.d.ts'/>
-
-import _ = require('underscore');
-
-// Util
-module U {
+module Collection {
 
     export class Iterator<T> {
 
@@ -28,48 +23,6 @@ module U {
         }
     }
 
-    export class CachedValue<T> {
-        private value: T;
-
-        constructor(private calculateValue: () => T) { }
-
-        get(): T {
-            if (!this.value) {
-                this.value = this.calculateValue();
-            }
-            return this.value;
-        }
-    }
-
-    export class Unique {
-
-        private i = 0;
-
-        constructor(private prefix: string) { }
-
-        get() {
-            return this.prefix + (++this.i);
-        }
-    }
-
-    export function containsOnly<T>(a: T[], b: T[]) {
-        return _.difference(a, b).length == 0;
-    }
-
-    export function isInNode(): boolean {
-        return typeof window === 'undefined';
-    }
-
-    export function isInBrowser(): boolean {
-        return !isInNode();
-    }
-
-    export function duplicateAwarePush<T>(array: Array<T>, item: T) {
-        if (array.indexOf(item) == -1) {
-            array.push(item);
-        }
-    }
-
     export interface ILinkedListItem<T> {
         value: T;
         next: ILinkedListItem<T>;
@@ -78,13 +31,11 @@ module U {
 
     export class LinkedList<T> {
 
+        length = 0;
         head: ILinkedListItem<T> = null;
         tail: ILinkedListItem<T> = null;
-        changeCount = 0; // can be used for watching changes for example in angularjs
+        changeCount = 0; // for angularjs change tracking
 
-        // Array interface satisfying 
-
-        length = 0;
         push(...items: T[]): number {
             items.forEach((item) => {
                 var listItem: ILinkedListItem<T> = {
@@ -106,7 +57,7 @@ module U {
 
         unshift(t: T) {
             if (this.length == 0) {
-                throw new Error("oh please god dont do this to empty list, aka not implemented");
+                throw new Error("unshift for empty list, not implemented");
             }
             var newFirst: ILinkedListItem<T> = {
                 value: t,
@@ -140,7 +91,6 @@ module U {
             }
         }
 
-        // extended
         clear() {
             while (this.length > 0) {
                 this.shift();
@@ -157,7 +107,7 @@ module U {
             items.forEach(item => this.push(item));
         }
 
-        replace(newList: U.LinkedList<T>) {
+        replace(newList: LinkedList<T>) {
             this.clear();
             this.pushList(newList);
         }
@@ -194,71 +144,12 @@ module U {
             super();
         }
 
-        push(...ticks: T[]): number {
-            ticks.forEach((tick) => super.push(tick));
+        push(...items: T[]): number {
+            items.forEach((item) => super.push(item));
             while (this.length > this.limit) {
                 this.shift();
             }
             return this.length;
-        }
-
-    }
-
-    export function areNumbers(...args) {
-        for (var i = 0; i < args.length; i++) {
-            if (!_.isNumber(args[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    export function nvl(value, fallback) {
-        return value ? value : fallback;
-    }
-
-
-    export class NameCounter {
-
-        private counts: { [v: string]: number } = {};
-
-        getPositiveNames(): string[] {
-            return _.filter(_.keys(this.counts), key => this.counts[key] > 0);
-        }
-
-        increment(name) {
-            this.counts[name] = U.nvl(this.counts[name], 0) + 1;
-        }
-
-        decrement(name) {
-            this.counts[name]--;
-        }
-    }
-
-    interface ObjectCount<T> {
-        object: T;
-        count: number;
-    }
-
-    export class ObjectCounter<T> {
-
-        private counts: ObjectCount<T>[] = [];
-
-        increment(object): number {
-            var count = _.find(this.counts, count => count.object == object);
-            if (count == null) {
-                count = {
-                    object: object,
-                    count: 0
-                }
-                this.counts.push(count);
-            }
-            return ++count.count;
-        }
-
-        decrement(object): number {
-            var count = _.find(this.counts, count => count.object == object);
-            return --count.count;
         }
     }
 
@@ -310,6 +201,16 @@ module U {
             };
         }
     }
+
+    export function containsOnly<T>(a: T[], b: T[]) {
+        return _.difference(a, b).length == 0;
+    }
+
+    export function addIfNew<T>(array: Array<T>, item: T) {
+        if (array.indexOf(item) == -1) {
+            array.push(item);
+        }
+    }
 }
 
-export = U;
+export = Collection;

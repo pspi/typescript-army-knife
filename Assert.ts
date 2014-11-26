@@ -3,8 +3,7 @@
 
 import _ = require('underscore');
 
-// Assert
-module A {
+module Assert {
 
     export function assert(statement: boolean, errorMessage: string) {
         if (!statement) {
@@ -13,9 +12,7 @@ module A {
     }
 
     export function assertBetween(value: number, start: number, end: number) {
-        assert(start <= end, "invalid parameters");
-        assert(value <= end, "value '" + value + "' higher than allowed " + end);
-        assert(value >= start, "value '" + value + "' higher than allowed " + end);
+        assert(isBetween(value, start, end), "value '" + value + "' not between '" + start + "' and '" + end + "'");
     }
 
     export function isBetween(value: number, start: number, end: number) {
@@ -24,10 +21,9 @@ module A {
     }
 
     export function assertNumbers(...numbers) {
-        if (!areNumbers.apply(null, numbers)) {
-            throw new Error("not a number");
-        }
+        assert(areNumbers.apply(null, numbers), "not a number");
     }
+
     export function areNumbers(...numbers) {
         numbers.forEach((n) => {
             // NaN is actually a number if you ask underscore, crazy huh
@@ -52,9 +48,7 @@ module A {
     }
 
     export function assertDefined(...objs) {
-        if (!areDefined.apply(null, objs)) {
-            throw new Error("not defined");
-        }
+        assert(areDefined.apply(null, objs), "not defined");
     }
 
     export function assertTag($e: JQuery, tag: string) {
@@ -74,4 +68,4 @@ module A {
 
 }
 
-export = A;
+export = Assert;
