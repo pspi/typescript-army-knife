@@ -5,7 +5,8 @@ Helpers and utilities missing from JavaScript. Written in Typescript for extende
 
 Module | Description
 --- | ---
-Assert | checking and asserting presence of values, numbers and things
+Is | checking apresence of values, numbers and things
+Assert | asserting presence of values, numbers and things
 Collection | data structure implementation: linked list, map
 Coord | 2D and 3D coordinate operations
 Math2 | extends on standard Math

@@ -3,6 +3,9 @@
 
 import _ = require('underscore');
 
+///ts:import=Is
+import Is = require('./Is'); ///ts:import:generated
+
 module Assert {
 
     export function assert(statement: boolean, errorMessage: string) {
@@ -11,54 +14,26 @@ module Assert {
         }
     }
 
-    export function assertBetween(value: number, start: number, end: number) {
-        assert(isBetween(value, start, end), "value '" + value + "' not between '" + start + "' and '" + end + "'");
+    export function between(value: number, start: number, end: number) {
+        assert(Is.between(value, start, end), "value '" + value + "' not between '" + start + "' and '" + end + "'");
     }
 
-    export function isBetween(value: number, start: number, end: number) {
-        assert(start <= end, "invalid parameters");
-        return start <= value && value <= end;
+    export function numbers(...numbers) {
+        assert(Is.number.apply(null, numbers), "not a number");
     }
 
-    export function assertNumbers(...numbers) {
-        assert(areNumbers.apply(null, numbers), "not a number");
+    export function defined(...objs) {
+        assert(Is.defined.apply(null, objs), "not defined");
     }
 
-    export function areNumbers(...numbers) {
-        numbers.forEach((n) => {
-            // NaN is actually a number if you ask underscore, crazy huh
-            if (_.isNaN(n) || !_.isNumber(n)) {
-                return false;
-            }
-        });
-        return true;
-    }
-
-    export function isDefined(obj) {
-        return !_.isUndefined(obj) && !_.isNull(obj) && !_.isNaN(obj)
-    }
-
-    export function areDefined(...objs) {
-        for (var i = 0; i < objs.length; i++) {
-            if (!isDefined(objs[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    export function assertDefined(...objs) {
-        assert(areDefined.apply(null, objs), "not defined");
-    }
-
-    export function assertTag($e: JQuery, tag: string) {
+    export function tag($e: JQuery, tag: string) {
         var actual = $e.prop('tagName');
         if (actual.toLowerCase() != tag) {
             throw actual + " is not " + tag;
         }
     }
 
-    export function assertObjectHasKeys(obj, keys: string[]) {
+    export function objectHasKeys(obj, keys: string[]) {
         keys.forEach((key) => {
             if (!(key in obj)) {
                 throw key + ' not in ' + _.keys(obj);
