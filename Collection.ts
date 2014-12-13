@@ -1,3 +1,5 @@
+import _ = require('underscore');
+
 module Collection {
 
     export class Iterator<T> {
@@ -200,9 +202,21 @@ module Collection {
                 throw new Error("key not found: " + key);
             };
         }
+
+        keys(): K[] {
+            return _.pluck(this.map, 'key');
+        }
+
+        values(): V[] {
+            return _.pluck(this.map, 'value');
+        }
+
+        forEach(iterator: (item: K, value: V) => void) {
+            this.map.forEach((item) => iterator(item.key, item.value));
+        }
     }
 
-    export function containsOnly<T>(a: T[], b: T[]) {
+    export function containsOnly<T>(a: T[], ...b: T[]) {
         return _.difference(a, b).length == 0;
     }
 

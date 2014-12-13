@@ -1,3 +1,6 @@
+
+import _ = require('underscore');
+
 ///ts:import=Util
 import Util = require('./Util'); ///ts:import:generated
 
@@ -54,7 +57,7 @@ module Value {
 
         private counts: ObjectCount<T>[] = [];
 
-        increment(object): number {
+        increment(object: T): number {
             var count = _.find(this.counts, count => count.object == object);
             if (count == null) {
                 count = {
@@ -66,9 +69,13 @@ module Value {
             return ++count.count;
         }
 
-        decrement(object): number {
+        decrement(object: T): number {
             var count = _.find(this.counts, count => count.object == object);
             return --count.count;
+        }
+
+        getPositiveValues(): T[] {
+            return _.pluck(_.filter(this.counts, (c) => c.count > 0), 'object');
         }
     }
 }
