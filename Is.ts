@@ -30,6 +30,10 @@ module Is {
         return true;
     }
 
+    export function undefined(obj) {
+        return !defined(obj);
+    }
+
 }
 
 export = Is;
