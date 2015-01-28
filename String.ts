@@ -32,6 +32,16 @@ module String {
         return result;
     }
 
+    export function zeroPad(v: number, z: number) {
+        var vstr = v.toString();
+        return repeatChar('0', z - vstr.length) + vstr;
+    }
+
+    export function formatDuration(durationInMs: number): String {
+        return zeroPad(Math.floor(durationInMs / 1000 / 60), 2) + ':' + zeroPad(Math.round(durationInMs / 1000 % 60), 2);
+
+    }
+
 }
 
 export = String;
