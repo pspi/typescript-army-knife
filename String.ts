@@ -38,8 +38,10 @@ module String {
     }
 
     export function formatDuration(durationInMs: number): String {
-        return zeroPad(Math.floor(durationInMs / 1000 / 60), 2) + ':' + zeroPad(Math.round(durationInMs / 1000 % 60), 2);
+        // avoid 01:60 results, so round to seconds before starting to work
+        var secs = Math.round(durationInMs / 1000);
 
+        return zeroPad(Math.floor(secs / 60), 2) + ':' + zeroPad(Math.round(secs % 60), 2);
     }
 
 }
