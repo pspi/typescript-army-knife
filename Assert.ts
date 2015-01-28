@@ -8,7 +8,7 @@ import Is = require('./Is'); ///ts:import:generated
 
 module Assert {
 
-    export function assert(statement: boolean, errorMessage: string) {
+    export function assert(statement: boolean, errorMessage: string = "assert failed") {
         if (!statement) {
             throw new Error(errorMessage);
         }
