@@ -32,12 +32,12 @@ module String {
         return result;
     }
 
-    export function zeroPad(v: number, z: number) {
+    export function zeroPad(v: number, z: number): string {
         var vstr = v.toString();
         return repeatChar('0', z - vstr.length) + vstr;
     }
 
-    export function formatDuration(durationInMs: number): String {
+    export function formatDuration(durationInMs: number): string {
         // avoid 01:60 results, so round to seconds before starting to work
         var secs = Math.round(durationInMs / 1000);
 
