@@ -1,6 +1,14 @@
 // 'Math' already taken in javascript, lets use Math2
 module Math2 {
 
+    export function mod(value, base) {
+        return ((value % base) + base) % base;
+    }
+
+    export function cap(min, value, max) {
+        return Math.min(Math.max(min, value), max);
+    }
+
     export function round(num, frac) {
         var shift = Math.pow(10, frac);
         return Math.round(num * shift) / shift;
