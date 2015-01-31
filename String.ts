@@ -1,3 +1,5 @@
+///ts:import=Is
+import Is = require('./Is'); ///ts:import:generated
 ///ts:import=Math2
 import Math2 = require('./Math2'); ///ts:import:generated
 
@@ -44,6 +46,9 @@ module String {
         return zeroPad(Math.floor(secs / 60), 2) + ':' + zeroPad(Math.round(secs % 60), 2);
     }
 
+    export function isNotEmpty(s: string): boolean {
+        return Is.defined(s) && !s.match(/^\s*$/);
+    }
 }
 
 export = String;
