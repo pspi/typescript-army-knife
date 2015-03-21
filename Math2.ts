@@ -1,6 +1,7 @@
 // 'Math' already taken in javascript, lets use Math2
 module Math2 {
 
+    /** Math.mod() that works with negative values */
     export function mod(value: number, base: number): number {
         return ((value % base) + base) % base;
     }
