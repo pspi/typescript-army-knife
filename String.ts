@@ -5,10 +5,10 @@ import Math2 = require('./Math2'); ///ts:import:generated
 
 module String {
 
-    function repeatChar(c: string, n: number): string {
+    export function repeatChar(char: string, n: number): string {
         var r = "";
         while (n-- > 0) {
-            r += c
+            r += char
         }
         return r;
     }
