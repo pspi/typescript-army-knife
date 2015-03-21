@@ -46,6 +46,14 @@ module Math2 {
         }
         return start2 < end1 && end2 > start1;
     }
+
+    export function halfInclusive(reference1: number, reference2: number, value: number): boolean {
+        if (reference1 < reference2) {
+            return reference1 <= value && value < reference2;
+        } else {
+            return reference1 >= value && value > reference2;
+        }
+    }
 }
 
 export = Math2;
