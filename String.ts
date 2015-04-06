@@ -34,9 +34,9 @@ module String {
         return result;
     }
 
-    export function zeroPad(v: number, z: number): string {
-        var vstr = v.toString();
-        return repeatChar('0', z - vstr.length) + vstr;
+    export function zeroPad(value: number, n: number): string {
+        var vstr = value.toString();
+        return repeatChar('0', n - vstr.length) + vstr;
     }
 
     export function formatDuration(durationInMs: number): string {
