@@ -46,6 +46,16 @@ module String {
         return zeroPad(Math.floor(secs / 60), 2) + ':' + zeroPad(Math.round(secs % 60), 2);
     }
 
+    export function formatLapTime(durationInMs: number): string {
+        durationInMs = Math.round(durationInMs);
+
+        var min = Math.floor(durationInMs / (60*1000));
+        var sec = Math.floor(durationInMs % (60 * 1000) / 1000);
+        var thous = durationInMs % 1000;
+
+        return min + ':' + String.zeroPad(sec, 2) + '.' + String.zeroPad(thous, 3);
+    }
+
     export function isNotEmpty(s: string): boolean {
         return Is.defined(s) && !s.match(/^\s*$/);
     }
