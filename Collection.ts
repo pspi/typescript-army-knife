@@ -1,5 +1,7 @@
 import _ = require('underscore');
 
+import Is = require('./Is');
+
 module Collection {
 
     export class Iterator<T> {
@@ -45,7 +47,7 @@ module Collection {
                     next: null,
                     prev: this.tail
                 };
-                if (this.length == 0) {
+                if (this.length === 0) {
                     this.head = this.tail = listItem;
                 } else {
                     this.tail.next = listItem;
@@ -58,7 +60,7 @@ module Collection {
         }
 
         unshift(t: T) {
-            if (this.length == 0) {
+            if (this.length === 0) {
                 throw new Error("unshift for empty list, not implemented");
             }
             var newFirst: ILinkedListItem<T> = {
@@ -76,11 +78,34 @@ module Collection {
         }
 
         shift(): T {
+            if (this.length === 0) {
+                throw new Error("shift for empty list, not implemented");
+            }
             var value = this.head.value;
             this.head = this.head.next;
+            if (this.head) {
+                this.head.prev = null;
+            }
             this.length--;
-            if (this.length == 0) {
+            if (this.length === 0) {
                 this.tail = null;
+            }
+            this.changeCount++;
+            return value;
+        }
+
+        pop(): T {
+            if (this.length === 0) {
+                throw new Error("pop for empty list, not implemented");
+            }
+            var value = this.tail.value;
+            this.tail = this.tail.prev;
+            if (this.tail) {
+                this.tail.next = null;
+            }
+            this.length--;
+            if (this.length === 0) {
+                this.head = null;
             }
             this.changeCount++;
             return value;
@@ -91,6 +116,24 @@ module Collection {
             while (cur = (cur ? cur.next : this.head)) {
                 cb(cur.value);
             }
+        }
+
+        reduce(fn: (previousValue: T, currentValue: T) => T, initialValue?: T): T {
+            var firsttime = true;
+            var reduction: T;
+            this.forEach((i) => {
+                if (firsttime) {
+                    firsttime = false;
+                    if (Is.defined(initialValue)) {
+                        reduction = initialValue;
+                    } else {
+                        reduction = i;
+                        return;
+                    }
+                }
+                reduction = fn(reduction, i);
+            });
+            return reduction;
         }
 
         clear() {
@@ -120,7 +163,7 @@ module Collection {
         }
 
         isEmpty(): boolean {
-            return this.length == 0;
+            return this.length === 0;
         }
 
         clone(): LinkedList<T> {
